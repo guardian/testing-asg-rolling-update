@@ -1,10 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
+exports[`The BasicAsgRollingUpdate stack matches the snapshot 1`] = `
 {
   "Metadata": {
-    "gu:build:number": "TEST",
-    "gu:build:sha": "TEST",
     "gu:cdk:constructs": [
       "GuVpcParameter",
       "GuSubnetListParameter",
@@ -31,19 +29,19 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
     "gu:cdk:version": "TEST",
   },
   "Outputs": {
-    "LoadBalancerTestingasgrollingupdateDnsName": {
-      "Description": "DNS entry for LoadBalancerTestingasgrollingupdate",
+    "LoadBalancerBasicDnsName": {
+      "Description": "DNS entry for LoadBalancerBasic",
       "Value": {
         "Fn::GetAtt": [
-          "LoadBalancerTestingasgrollingupdate212393BE",
+          "LoadBalancerBasic0263A664",
           "DNSName",
         ],
       },
     },
   },
   "Parameters": {
-    "AMITestingasgrollingupdate": {
-      "Description": "Amazon Machine Image ID for the app testing-asg-rolling-update. Use this in conjunction with AMIgo to keep AMIs up to date.",
+    "AMIBasic": {
+      "Description": "Amazon Machine Image ID for the app basic. Use this in conjunction with AMIgo to keep AMIs up to date.",
       "Type": "AWS::EC2::Image::Id",
     },
     "DistributionBucketName": {
@@ -61,12 +59,12 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
       "Description": "Virtual Private Cloud to run EC2 instances within. Should NOT be the account default VPC.",
       "Type": "AWS::SSM::Parameter::Value<AWS::EC2::VPC::Id>",
     },
-    "testingasgrollingupdatePrivateSubnets": {
+    "basicPrivateSubnets": {
       "Default": "/account/vpc/primary/subnets/private",
       "Description": "A list of private subnets",
       "Type": "AWS::SSM::Parameter::Value<List<AWS::EC2::Subnet::Id>>",
     },
-    "testingasgrollingupdatePublicSubnets": {
+    "basicPublicSubnets": {
       "Default": "/account/vpc/primary/subnets/public",
       "Description": "A list of public subnets",
       "Type": "AWS::SSM::Parameter::Value<List<AWS::EC2::Subnet::Id>>",
@@ -95,13 +93,13 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
         "PolicyName": "AsgReplacingUpdatePolicy78CF34D5",
         "Roles": [
           {
-            "Ref": "InstanceRoleTestingasgrollingupdate9C94CB64",
+            "Ref": "InstanceRoleBasicC6212E32",
           },
         ],
       },
       "Type": "AWS::IAM::Policy",
     },
-    "AutoScalingGroupTestingasgrollingupdateASGC3E6DA11": {
+    "AutoScalingGroupBasicASG7A1B705E": {
       "CreationPolicy": {
         "AutoScalingCreationPolicy": {
           "MinSuccessfulInstancesPercent": 100,
@@ -117,11 +115,11 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
         "HealthCheckType": "ELB",
         "LaunchTemplate": {
           "LaunchTemplateId": {
-            "Ref": "playgroundTESTtestingasgrollingupdateB9EB0042",
+            "Ref": "playgroundCODEbasic5A2FE87E",
           },
           "Version": {
             "Fn::GetAtt": [
-              "playgroundTESTtestingasgrollingupdateB9EB0042",
+              "playgroundCODEbasic5A2FE87E",
               "LatestVersionNumber",
             ],
           },
@@ -137,17 +135,7 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
           {
             "Key": "App",
             "PropagateAtLaunch": true,
-            "Value": "testing-asg-rolling-update",
-          },
-          {
-            "Key": "gu:build:number",
-            "PropagateAtLaunch": true,
-            "Value": "TEST",
-          },
-          {
-            "Key": "gu:build:sha",
-            "PropagateAtLaunch": true,
-            "Value": "TEST",
+            "Value": "basic",
           },
           {
             "Key": "gu:cdk:version",
@@ -174,21 +162,21 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
           {
             "Key": "Stage",
             "PropagateAtLaunch": true,
-            "Value": "TEST",
+            "Value": "CODE",
           },
           {
             "Key": "SystemdUnit",
             "PropagateAtLaunch": true,
-            "Value": "testing-asg-rolling-update.service",
+            "Value": "basic.service",
           },
         ],
         "TargetGroupARNs": [
           {
-            "Ref": "TargetGroupTestingasgrollingupdateC5208046",
+            "Ref": "TargetGroupBasicC882006F",
           },
         ],
         "VPCZoneIdentifier": {
-          "Ref": "testingasgrollingupdatePrivateSubnets",
+          "Ref": "basicPrivateSubnets",
         },
       },
       "Type": "AWS::AutoScaling::AutoScalingGroup",
@@ -205,14 +193,14 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
         },
       },
     },
-    "CertificateTestingasgrollingupdateB9B60CB2": {
+    "CertificateBasicB449389E": {
       "DeletionPolicy": "Retain",
       "Properties": {
-        "DomainName": "testing-asg-rolling-update.code.dev-gutools.co.uk",
+        "DomainName": "basic.rolling-update.gutools.co.uk",
         "Tags": [
           {
             "Key": "App",
-            "Value": "testing-asg-rolling-update",
+            "Value": "basic",
           },
           {
             "Key": "gu:cdk:version",
@@ -224,7 +212,7 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
           },
           {
             "Key": "Name",
-            "Value": "TestingAsgRollingUpdate/CertificateTestingasgrollingupdate",
+            "Value": "basic/CertificateBasic",
           },
           {
             "Key": "Stack",
@@ -232,7 +220,7 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
           },
           {
             "Key": "Stage",
-            "Value": "TEST",
+            "Value": "CODE",
           },
         ],
         "ValidationMethod": "DNS",
@@ -242,17 +230,17 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
     },
     "DNS": {
       "Properties": {
-        "Name": "testing-asg-rolling-update.code.dev-gutools.co.uk",
+        "Name": "basic.rolling-update.gutools.co.uk",
         "RecordType": "CNAME",
         "ResourceRecords": [
           {
             "Fn::GetAtt": [
-              "LoadBalancerTestingasgrollingupdate212393BE",
+              "LoadBalancerBasic0263A664",
               "DNSName",
             ],
           },
         ],
-        "Stage": "TEST",
+        "Stage": "CODE",
         "TTL": 3600,
       },
       "Type": "Guardian::DNS::RecordSet",
@@ -277,13 +265,13 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
         "PolicyName": "describe-ec2-policy",
         "Roles": [
           {
-            "Ref": "InstanceRoleTestingasgrollingupdate9C94CB64",
+            "Ref": "InstanceRoleBasicC6212E32",
           },
         ],
       },
       "Type": "AWS::IAM::Policy",
     },
-    "GetDistributablePolicyTestingasgrollingupdate3CB66158": {
+    "GetDistributablePolicyBasic1F2B1B4C": {
       "Properties": {
         "PolicyDocument": {
           "Statement": [
@@ -298,7 +286,7 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
                     {
                       "Ref": "DistributionBucketName",
                     },
-                    "/playground/TEST/testing-asg-rolling-update/*",
+                    "/playground/CODE/basic/*",
                   ],
                 ],
               },
@@ -306,16 +294,16 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
           ],
           "Version": "2012-10-17",
         },
-        "PolicyName": "GetDistributablePolicyTestingasgrollingupdate3CB66158",
+        "PolicyName": "GetDistributablePolicyBasic1F2B1B4C",
         "Roles": [
           {
-            "Ref": "InstanceRoleTestingasgrollingupdate9C94CB64",
+            "Ref": "InstanceRoleBasicC6212E32",
           },
         ],
       },
       "Type": "AWS::IAM::Policy",
     },
-    "GuHttpsEgressSecurityGroupTestingasgrollingupdateED472AED": {
+    "GuHttpsEgressSecurityGroupBasicCF8196C0": {
       "Properties": {
         "GroupDescription": "Allow all outbound HTTPS traffic",
         "SecurityGroupEgress": [
@@ -330,7 +318,7 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
         "Tags": [
           {
             "Key": "App",
-            "Value": "testing-asg-rolling-update",
+            "Value": "basic",
           },
           {
             "Key": "gu:cdk:version",
@@ -346,7 +334,7 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
           },
           {
             "Key": "Stage",
-            "Value": "TEST",
+            "Value": "CODE",
           },
         ],
         "VpcId": {
@@ -355,20 +343,20 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
       },
       "Type": "AWS::EC2::SecurityGroup",
     },
-    "GuHttpsEgressSecurityGroupTestingasgrollingupdatefromTestingAsgRollingUpdateLoadBalancerTestingasgrollingupdateSecurityGroup9D377DE5900042685F96": {
+    "GuHttpsEgressSecurityGroupBasicfrombasicLoadBalancerBasicSecurityGroupB4B6F83E9000A78A1EC4": {
       "Properties": {
         "Description": "Load balancer to target",
         "FromPort": 9000,
         "GroupId": {
           "Fn::GetAtt": [
-            "GuHttpsEgressSecurityGroupTestingasgrollingupdateED472AED",
+            "GuHttpsEgressSecurityGroupBasicCF8196C0",
             "GroupId",
           ],
         },
         "IpProtocol": "tcp",
         "SourceSecurityGroupId": {
           "Fn::GetAtt": [
-            "LoadBalancerTestingasgrollingupdateSecurityGroup0BF53591",
+            "LoadBalancerBasicSecurityGroup8F198845",
             "GroupId",
           ],
         },
@@ -390,11 +378,7 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
                 "Fn::Join": [
                   "",
                   [
-                    "arn:aws:kinesis:",
-                    {
-                      "Ref": "AWS::Region",
-                    },
-                    ":",
+                    "arn:aws:kinesis:eu-west-1:",
                     {
                       "Ref": "AWS::AccountId",
                     },
@@ -412,13 +396,13 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
         "PolicyName": "GuLogShippingPolicy981BFE5A",
         "Roles": [
           {
-            "Ref": "InstanceRoleTestingasgrollingupdate9C94CB64",
+            "Ref": "InstanceRoleBasicC6212E32",
           },
         ],
       },
       "Type": "AWS::IAM::Policy",
     },
-    "InstanceRoleTestingasgrollingupdate9C94CB64": {
+    "InstanceRoleBasicC6212E32": {
       "Properties": {
         "AssumeRolePolicyDocument": {
           "Statement": [
@@ -436,7 +420,7 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
         "Tags": [
           {
             "Key": "App",
-            "Value": "testing-asg-rolling-update",
+            "Value": "basic",
           },
           {
             "Key": "gu:cdk:version",
@@ -452,31 +436,31 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
           },
           {
             "Key": "Stage",
-            "Value": "TEST",
+            "Value": "CODE",
           },
         ],
       },
       "Type": "AWS::IAM::Role",
     },
-    "ListenerTestingasgrollingupdate8E24502E": {
+    "ListenerBasic17648D88": {
       "Properties": {
         "Certificates": [
           {
             "CertificateArn": {
-              "Ref": "CertificateTestingasgrollingupdateB9B60CB2",
+              "Ref": "CertificateBasicB449389E",
             },
           },
         ],
         "DefaultActions": [
           {
             "TargetGroupArn": {
-              "Ref": "TargetGroupTestingasgrollingupdateC5208046",
+              "Ref": "TargetGroupBasicC882006F",
             },
             "Type": "forward",
           },
         ],
         "LoadBalancerArn": {
-          "Ref": "LoadBalancerTestingasgrollingupdate212393BE",
+          "Ref": "LoadBalancerBasic0263A664",
         },
         "Port": 443,
         "Protocol": "HTTPS",
@@ -484,7 +468,7 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
       },
       "Type": "AWS::ElasticLoadBalancingV2::Listener",
     },
-    "LoadBalancerTestingasgrollingupdate212393BE": {
+    "LoadBalancerBasic0263A664": {
       "Properties": {
         "LoadBalancerAttributes": [
           {
@@ -504,18 +488,18 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
         "SecurityGroups": [
           {
             "Fn::GetAtt": [
-              "LoadBalancerTestingasgrollingupdateSecurityGroup0BF53591",
+              "LoadBalancerBasicSecurityGroup8F198845",
               "GroupId",
             ],
           },
         ],
         "Subnets": {
-          "Ref": "testingasgrollingupdatePublicSubnets",
+          "Ref": "basicPublicSubnets",
         },
         "Tags": [
           {
             "Key": "App",
-            "Value": "testing-asg-rolling-update",
+            "Value": "basic",
           },
           {
             "Key": "gu:cdk:version",
@@ -531,16 +515,16 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
           },
           {
             "Key": "Stage",
-            "Value": "TEST",
+            "Value": "CODE",
           },
         ],
         "Type": "application",
       },
       "Type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
     },
-    "LoadBalancerTestingasgrollingupdateSecurityGroup0BF53591": {
+    "LoadBalancerBasicSecurityGroup8F198845": {
       "Properties": {
-        "GroupDescription": "Automatically created Security Group for ELB TestingAsgRollingUpdateLoadBalancerTestingasgrollingupdateC4CFEED1",
+        "GroupDescription": "Automatically created Security Group for ELB basicLoadBalancerBasicDA0EF048",
         "SecurityGroupIngress": [
           {
             "CidrIp": "0.0.0.0/0",
@@ -553,7 +537,7 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
         "Tags": [
           {
             "Key": "App",
-            "Value": "testing-asg-rolling-update",
+            "Value": "basic",
           },
           {
             "Key": "gu:cdk:version",
@@ -569,7 +553,7 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
           },
           {
             "Key": "Stage",
-            "Value": "TEST",
+            "Value": "CODE",
           },
         ],
         "VpcId": {
@@ -578,19 +562,19 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
       },
       "Type": "AWS::EC2::SecurityGroup",
     },
-    "LoadBalancerTestingasgrollingupdateSecurityGrouptoTestingAsgRollingUpdateGuHttpsEgressSecurityGroupTestingasgrollingupdate888239009000A705F88C": {
+    "LoadBalancerBasicSecurityGrouptobasicGuHttpsEgressSecurityGroupBasic7202EAE3900097165241": {
       "Properties": {
         "Description": "Load balancer to target",
         "DestinationSecurityGroupId": {
           "Fn::GetAtt": [
-            "GuHttpsEgressSecurityGroupTestingasgrollingupdateED472AED",
+            "GuHttpsEgressSecurityGroupBasicCF8196C0",
             "GroupId",
           ],
         },
         "FromPort": 9000,
         "GroupId": {
           "Fn::GetAtt": [
-            "LoadBalancerTestingasgrollingupdateSecurityGroup0BF53591",
+            "LoadBalancerBasicSecurityGroup8F198845",
             "GroupId",
           ],
         },
@@ -599,7 +583,7 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
       },
       "Type": "AWS::EC2::SecurityGroupEgress",
     },
-    "LoadBalancerTestingasgrollingupdateSecurityGrouptoTestingAsgRollingUpdateWazuhSecurityGroup9264C8C09000D42E1AB6": {
+    "LoadBalancerBasicSecurityGrouptobasicWazuhSecurityGroupD868434790004F22F18C": {
       "Properties": {
         "Description": "Load balancer to target",
         "DestinationSecurityGroupId": {
@@ -611,7 +595,7 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
         "FromPort": 9000,
         "GroupId": {
           "Fn::GetAtt": [
-            "LoadBalancerTestingasgrollingupdateSecurityGroup0BF53591",
+            "LoadBalancerBasicSecurityGroup8F198845",
             "GroupId",
           ],
         },
@@ -620,7 +604,7 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
       },
       "Type": "AWS::EC2::SecurityGroupEgress",
     },
-    "ParameterStoreReadTestingasgrollingupdate708BC63B": {
+    "ParameterStoreReadBasic0B1BF42E": {
       "Properties": {
         "PolicyDocument": {
           "Statement": [
@@ -631,15 +615,11 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
                 "Fn::Join": [
                   "",
                   [
-                    "arn:aws:ssm:",
-                    {
-                      "Ref": "AWS::Region",
-                    },
-                    ":",
+                    "arn:aws:ssm:eu-west-1:",
                     {
                       "Ref": "AWS::AccountId",
                     },
-                    ":parameter/TEST/playground/testing-asg-rolling-update",
+                    ":parameter/CODE/playground/basic",
                   ],
                 ],
               },
@@ -654,15 +634,11 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
                 "Fn::Join": [
                   "",
                   [
-                    "arn:aws:ssm:",
-                    {
-                      "Ref": "AWS::Region",
-                    },
-                    ":",
+                    "arn:aws:ssm:eu-west-1:",
                     {
                       "Ref": "AWS::AccountId",
                     },
-                    ":parameter/TEST/playground/testing-asg-rolling-update/*",
+                    ":parameter/CODE/playground/basic/*",
                   ],
                 ],
               },
@@ -673,7 +649,7 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
         "PolicyName": "parameter-store-read-policy",
         "Roles": [
           {
-            "Ref": "InstanceRoleTestingasgrollingupdate9C94CB64",
+            "Ref": "InstanceRoleBasicC6212E32",
           },
         ],
       },
@@ -709,13 +685,13 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
         "PolicyName": "ssm-ssh-policy",
         "Roles": [
           {
-            "Ref": "InstanceRoleTestingasgrollingupdate9C94CB64",
+            "Ref": "InstanceRoleBasicC6212E32",
           },
         ],
       },
       "Type": "AWS::IAM::Policy",
     },
-    "TargetGroupTestingasgrollingupdateC5208046": {
+    "TargetGroupBasicC882006F": {
       "Properties": {
         "HealthCheckIntervalSeconds": 10,
         "HealthCheckPath": "/healthcheck",
@@ -727,7 +703,7 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
         "Tags": [
           {
             "Key": "App",
-            "Value": "testing-asg-rolling-update",
+            "Value": "basic",
           },
           {
             "Key": "gu:cdk:version",
@@ -743,7 +719,7 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
           },
           {
             "Key": "Stage",
-            "Value": "TEST",
+            "Value": "CODE",
           },
         ],
         "TargetGroupAttributes": [
@@ -786,7 +762,7 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
         "Tags": [
           {
             "Key": "App",
-            "Value": "testing-asg-rolling-update",
+            "Value": "basic",
           },
           {
             "Key": "gu:cdk:version",
@@ -802,7 +778,7 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
           },
           {
             "Key": "Stage",
-            "Value": "TEST",
+            "Value": "CODE",
           },
         ],
         "VpcId": {
@@ -811,7 +787,7 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
       },
       "Type": "AWS::EC2::SecurityGroup",
     },
-    "WazuhSecurityGroupfromTestingAsgRollingUpdateLoadBalancerTestingasgrollingupdateSecurityGroup9D377DE5900067E75A9F": {
+    "WazuhSecurityGroupfrombasicLoadBalancerBasicSecurityGroupB4B6F83E90003F093FE0": {
       "Properties": {
         "Description": "Load balancer to target",
         "FromPort": 9000,
@@ -824,7 +800,7 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
         "IpProtocol": "tcp",
         "SourceSecurityGroupId": {
           "Fn::GetAtt": [
-            "LoadBalancerTestingasgrollingupdateSecurityGroup0BF53591",
+            "LoadBalancerBasicSecurityGroup8F198845",
             "GroupId",
           ],
         },
@@ -832,22 +808,22 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
       },
       "Type": "AWS::EC2::SecurityGroupIngress",
     },
-    "playgroundTESTtestingasgrollingupdateB9EB0042": {
+    "playgroundCODEbasic5A2FE87E": {
       "DependsOn": [
-        "InstanceRoleTestingasgrollingupdate9C94CB64",
+        "InstanceRoleBasicC6212E32",
       ],
       "Properties": {
         "LaunchTemplateData": {
           "IamInstanceProfile": {
             "Arn": {
               "Fn::GetAtt": [
-                "playgroundTESTtestingasgrollingupdateProfile1B677D15",
+                "playgroundCODEbasicProfile8CF3B60A",
                 "Arn",
               ],
             },
           },
           "ImageId": {
-            "Ref": "AMITestingasgrollingupdate",
+            "Ref": "AMIBasic",
           },
           "InstanceType": "t4g.micro",
           "MetadataOptions": {
@@ -856,7 +832,7 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
           "SecurityGroupIds": [
             {
               "Fn::GetAtt": [
-                "GuHttpsEgressSecurityGroupTestingasgrollingupdateED472AED",
+                "GuHttpsEgressSecurityGroupBasicCF8196C0",
                 "GroupId",
               ],
             },
@@ -873,7 +849,7 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
               "Tags": [
                 {
                   "Key": "App",
-                  "Value": "testing-asg-rolling-update",
+                  "Value": "basic",
                 },
                 {
                   "Key": "gu:cdk:version",
@@ -885,7 +861,7 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
                 },
                 {
                   "Key": "Name",
-                  "Value": "TestingAsgRollingUpdate/playground-TEST-testing-asg-rolling-update",
+                  "Value": "basic/playground-CODE-basic",
                 },
                 {
                   "Key": "Stack",
@@ -893,7 +869,7 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
                 },
                 {
                   "Key": "Stage",
-                  "Value": "TEST",
+                  "Value": "CODE",
                 },
               ],
             },
@@ -902,7 +878,7 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
               "Tags": [
                 {
                   "Key": "App",
-                  "Value": "testing-asg-rolling-update",
+                  "Value": "basic",
                 },
                 {
                   "Key": "gu:cdk:version",
@@ -914,7 +890,7 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
                 },
                 {
                   "Key": "Name",
-                  "Value": "TestingAsgRollingUpdate/playground-TEST-testing-asg-rolling-update",
+                  "Value": "basic/playground-CODE-basic",
                 },
                 {
                   "Key": "Stack",
@@ -922,7 +898,7 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
                 },
                 {
                   "Key": "Stage",
-                  "Value": "TEST",
+                  "Value": "CODE",
                 },
               ],
             },
@@ -940,47 +916,35 @@ exitCode=$?
                   {
                     "Ref": "AWS::StackId",
                   },
-                  "           --resource AutoScalingGroupTestingasgrollingupdateASGC3E6DA11           --region ",
-                  {
-                    "Ref": "AWS::Region",
-                  },
-                  "           --exit-code $exitCode || echo 'Failed to send Cloudformation Signal'
+                  "           --resource AutoScalingGroupBasicASG7A1B705E           --region eu-west-1           --exit-code $exitCode || echo 'Failed to send Cloudformation Signal'
         
 }
 trap exitTrap EXIT
-mkdir -p $(dirname '/testing-asg-rolling-update/testing-asg-rolling-update_ABC.deb')
+mkdir -p $(dirname '/basic/testing-asg-rolling-update_ABC.deb')
 aws s3 cp 's3://",
                   {
                     "Ref": "DistributionBucketName",
                   },
-                  "/playground/TEST/testing-asg-rolling-update/testing-asg-rolling-update_ABC.deb' '/testing-asg-rolling-update/testing-asg-rolling-update_ABC.deb'
-dpkg -i /testing-asg-rolling-update/testing-asg-rolling-update_ABC.deb
+                  "/playground/CODE/basic/testing-asg-rolling-update_ABC.deb' '/basic/testing-asg-rolling-update_ABC.deb'
+dpkg -i /basic/testing-asg-rolling-update_ABC.deb
 # GuEc2AppExperimental UserData Start
 
       INSTANCE_ID=$(ec2metadata --instance-id)
 
       STATE=$(aws elbv2 describe-target-health         --target-group-arn ",
                   {
-                    "Ref": "TargetGroupTestingasgrollingupdateC5208046",
+                    "Ref": "TargetGroupBasicC882006F",
                   },
-                  "         --region ",
-                  {
-                    "Ref": "AWS::Region",
-                  },
-                  "         --targets Id=$INSTANCE_ID,Port=9000         --query "TargetHealthDescriptions[0].TargetHealth.State")
+                  "         --region eu-west-1         --targets Id=$INSTANCE_ID,Port=9000         --query "TargetHealthDescriptions[0].TargetHealth.State")
 
       until [ "$STATE" == "\\"healthy\\"" ]; do
         echo "Instance not yet healthy within target group. Current state $STATE. Sleeping..."
         sleep 5
         STATE=$(aws elbv2 describe-target-health           --target-group-arn ",
                   {
-                    "Ref": "TargetGroupTestingasgrollingupdateC5208046",
+                    "Ref": "TargetGroupBasicC882006F",
                   },
-                  "           --region ",
-                  {
-                    "Ref": "AWS::Region",
-                  },
-                  "           --targets Id=$INSTANCE_ID,Port=9000           --query "TargetHealthDescriptions[0].TargetHealth.State")
+                  "           --region eu-west-1           --targets Id=$INSTANCE_ID,Port=9000           --query "TargetHealthDescriptions[0].TargetHealth.State")
       done
 
       echo "Instance is healthy in target group."
@@ -997,7 +961,7 @@ dpkg -i /testing-asg-rolling-update/testing-asg-rolling-update_ABC.deb
             "Tags": [
               {
                 "Key": "App",
-                "Value": "testing-asg-rolling-update",
+                "Value": "basic",
               },
               {
                 "Key": "gu:cdk:version",
@@ -1009,7 +973,7 @@ dpkg -i /testing-asg-rolling-update/testing-asg-rolling-update_ABC.deb
               },
               {
                 "Key": "Name",
-                "Value": "TestingAsgRollingUpdate/playground-TEST-testing-asg-rolling-update",
+                "Value": "basic/playground-CODE-basic",
               },
               {
                 "Key": "Stack",
@@ -1017,7 +981,7 @@ dpkg -i /testing-asg-rolling-update/testing-asg-rolling-update_ABC.deb
               },
               {
                 "Key": "Stage",
-                "Value": "TEST",
+                "Value": "CODE",
               },
             ],
           },
@@ -1025,11 +989,11 @@ dpkg -i /testing-asg-rolling-update/testing-asg-rolling-update_ABC.deb
       },
       "Type": "AWS::EC2::LaunchTemplate",
     },
-    "playgroundTESTtestingasgrollingupdateProfile1B677D15": {
+    "playgroundCODEbasicProfile8CF3B60A": {
       "Properties": {
         "Roles": [
           {
-            "Ref": "InstanceRoleTestingasgrollingupdate9C94CB64",
+            "Ref": "InstanceRoleBasicC6212E32",
           },
         ],
       },

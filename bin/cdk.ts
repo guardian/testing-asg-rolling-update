@@ -1,12 +1,34 @@
 import 'source-map-support/register';
-import { GuRoot } from '@guardian/cdk/lib/constructs/root';
-import { TestingAsgRollingUpdate } from '../lib/testing-asg-rolling-update';
 
-const app = new GuRoot();
-new TestingAsgRollingUpdate(app, 'TestingAsgRollingUpdate-euwest-1-CODE', {
-	stack: 'playground',
-	stage: 'CODE',
-	app: 'testing-asg-rolling-update',
-	env: { region: 'eu-west-1' },
+import { RiffRaffYamlFile } from '@guardian/cdk/lib/riff-raff-yaml-file';
+import { App } from 'aws-cdk-lib';
+import { BasicAsgRollingUpdate } from '../lib/basic-asg-rolling-update';
+import { NoDesiredAsgRollingUpdate } from '../lib/no-desired-asg-rolling-update';
+
+const app = new App();
+
+new BasicAsgRollingUpdate(app, {
 	buildIdentifier: 'ABC',
 });
+
+new NoDesiredAsgRollingUpdate(app, {
+	buildIdentifier: 'ABC',
+});
+
+/*
+Set every `autoscaling / uploadArtifacts` deployment to use the same `contentDirectory`
+allowing us to create multiple stacks w/out needing to edit `.github/workflows/ci.yaml`.
+ */
+const riffRaff = new RiffRaffYamlFile(app);
+const { deployments } = riffRaff.riffRaffYaml;
+deployments.forEach((value, key) => {
+	const { type, actions = [] } = value;
+	const [action] = actions;
+	if (type === 'autoscaling' && action === 'uploadArtifacts') {
+		deployments.set(key, {
+			...value,
+			contentDirectory: 'testing-asg-rolling-update',
+		});
+	}
+});
+riffRaff.synth();
