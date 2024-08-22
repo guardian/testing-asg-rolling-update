@@ -8,7 +8,7 @@ import { NoDesiredAsgRollingUpdate } from '../lib/no-desired-asg-rolling-update'
 const app = new App();
 
 new BasicAsgRollingUpdate(app, {
-	buildIdentifier: 'ABC',
+	buildIdentifier: 'XYZ',
 });
 
 new NoDesiredAsgRollingUpdate(app, {
