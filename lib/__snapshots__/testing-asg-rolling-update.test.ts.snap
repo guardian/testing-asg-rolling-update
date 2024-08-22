@@ -9,7 +9,7 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
       "GuVpcParameter",
       "GuSubnetListParameter",
       "GuSubnetListParameter",
-      "GuPlayApp",
+      "GuEc2AppExperimental",
       "GuDistributionBucketParameter",
       "GuCertificate",
       "GuInstanceRole",
@@ -73,8 +73,46 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
     },
   },
   "Resources": {
-    "AutoScalingGroupTestingasgrollingupdateASGC3E6DA11": {
+    "AsgReplacingUpdatePolicy78CF34D5": {
       "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": "cloudformation:SignalResource",
+              "Effect": "Allow",
+              "Resource": {
+                "Ref": "AWS::StackId",
+              },
+            },
+            {
+              "Action": "elasticloadbalancing:DescribeTargetHealth",
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "AsgReplacingUpdatePolicy78CF34D5",
+        "Roles": [
+          {
+            "Ref": "InstanceRoleTestingasgrollingupdate9C94CB64",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "AutoScalingGroupTestingasgrollingupdateASGC3E6DA11": {
+      "CreationPolicy": {
+        "AutoScalingCreationPolicy": {
+          "MinSuccessfulInstancesPercent": 100,
+        },
+        "ResourceSignal": {
+          "Count": 1,
+          "Timeout": "PT5M",
+        },
+      },
+      "Properties": {
+        "DesiredCapacity": "1",
         "HealthCheckGracePeriod": 120,
         "HealthCheckType": "ELB",
         "LaunchTemplate": {
@@ -92,10 +130,6 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
         "MetricsCollection": [
           {
             "Granularity": "1Minute",
-            "Metrics": [
-              "GroupTotalInstances",
-              "GroupInServiceInstances",
-            ],
           },
         ],
         "MinSize": "1",
@@ -158,6 +192,18 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
         },
       },
       "Type": "AWS::AutoScaling::AutoScalingGroup",
+      "UpdatePolicy": {
+        "AutoScalingRollingUpdate": {
+          "MaxBatchSize": 2,
+          "MinInstancesInService": 1,
+          "MinSuccessfulInstancesPercent": 100,
+          "SuspendProcesses": [],
+          "WaitOnResourceSignals": true,
+        },
+        "AutoScalingScheduledAction": {
+          "IgnoreUnmodifiedGroupSizeProperties": true,
+        },
+      },
     },
     "CertificateTestingasgrollingupdateB9B60CB2": {
       "DeletionPolicy": "Retain",
@@ -883,13 +929,59 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
                 "",
                 [
                   "#!/bin/bash
+function exitTrap(){
+exitCode=$?
+
+        cfn-signal --stack ",
+                  {
+                    "Ref": "AWS::StackId",
+                  },
+                  "           --resource AutoScalingGroupTestingasgrollingupdateASGC3E6DA11           --region ",
+                  {
+                    "Ref": "AWS::Region",
+                  },
+                  "           --exit-code $exitCode || echo 'Failed to send Cloudformation Signal'
+        
+}
+trap exitTrap EXIT
 mkdir -p $(dirname '/testing-asg-rolling-update/testing-asg-rolling-update_ABC.deb')
 aws s3 cp 's3://",
                   {
                     "Ref": "DistributionBucketName",
                   },
                   "/playground/TEST/testing-asg-rolling-update/testing-asg-rolling-update_ABC.deb' '/testing-asg-rolling-update/testing-asg-rolling-update_ABC.deb'
-dpkg -i /testing-asg-rolling-update/testing-asg-rolling-update_ABC.deb",
+dpkg -i /testing-asg-rolling-update/testing-asg-rolling-update_ABC.deb
+# GuEc2AppExperimental UserData Start
+
+      INSTANCE_ID=$(ec2metadata --instance-id)
+
+      STATE=$(aws elbv2 describe-target-health         --target-group-arn ",
+                  {
+                    "Ref": "TargetGroupTestingasgrollingupdateC5208046",
+                  },
+                  "         --region ",
+                  {
+                    "Ref": "AWS::Region",
+                  },
+                  "         --targets Id=$INSTANCE_ID,Port=9000         --query "TargetHealthDescriptions[0].TargetHealth.State")
+
+      until [ "$STATE" == "\\"healthy\\"" ]; do
+        echo "Instance not yet healthy within target group. Current state $STATE. Sleeping..."
+        sleep 5
+        STATE=$(aws elbv2 describe-target-health           --target-group-arn ",
+                  {
+                    "Ref": "TargetGroupTestingasgrollingupdateC5208046",
+                  },
+                  "           --region ",
+                  {
+                    "Ref": "AWS::Region",
+                  },
+                  "           --targets Id=$INSTANCE_ID,Port=9000           --query "TargetHealthDescriptions[0].TargetHealth.State")
+      done
+
+      echo "Instance is healthy in target group."
+      
+# GuEc2AppExperimental UserData End",
                 ],
               ],
             },

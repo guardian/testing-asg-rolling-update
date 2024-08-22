@@ -1,8 +1,8 @@
-import { GuPlayApp } from '@guardian/cdk';
 import { AccessScope } from '@guardian/cdk/lib/constants';
 import type { GuStackProps } from '@guardian/cdk/lib/constructs/core';
 import { GuStack } from '@guardian/cdk/lib/constructs/core';
 import { GuCname } from '@guardian/cdk/lib/constructs/dns';
+import { GuEc2AppExperimental } from '@guardian/cdk/lib/experimental/patterns/ec2-app';
 import type { App } from 'aws-cdk-lib';
 import { Duration, Tags } from 'aws-cdk-lib';
 import { InstanceClass, InstanceSize, InstanceType } from 'aws-cdk-lib/aws-ec2';
@@ -20,7 +20,8 @@ export class TestingAsgRollingUpdate extends GuStack {
 		const app = 'testing-asg-rolling-update';
 		const domainName = `${app}.code.dev-gutools.co.uk`;
 
-		const { loadBalancer, autoScalingGroup } = new GuPlayApp(this, {
+		const { loadBalancer, autoScalingGroup } = new GuEc2AppExperimental(this, {
+			applicationPort: 9000,
 			app,
 			instanceType: InstanceType.of(InstanceClass.T4G, InstanceSize.MICRO),
 			access: { scope: AccessScope.PUBLIC },
