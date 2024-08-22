@@ -162,7 +162,7 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
     "CertificateTestingasgrollingupdateB9B60CB2": {
       "DeletionPolicy": "Retain",
       "Properties": {
-        "DomainName": "testing-asg-rolling-update.gutools.co.uk",
+        "DomainName": "testing-asg-rolling-update.code.dev-gutools.co.uk",
         "Tags": [
           {
             "Key": "App",
@@ -196,7 +196,7 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
     },
     "DNS": {
       "Properties": {
-        "Name": "testing-asg-rolling-update.gutools.co.uk",
+        "Name": "testing-asg-rolling-update.code.dev-gutools.co.uk",
         "RecordType": "CNAME",
         "ResourceRecords": [
           {

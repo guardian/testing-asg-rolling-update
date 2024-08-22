@@ -18,7 +18,7 @@ export class TestingAsgRollingUpdate extends GuStack {
 		const { buildIdentifier } = props;
 
 		const app = 'testing-asg-rolling-update';
-		const domainName = `${app}.gutools.co.uk`;
+		const domainName = `${app}.code.dev-gutools.co.uk`;
 
 		const { loadBalancer, autoScalingGroup } = new GuPlayApp(this, {
 			app,
