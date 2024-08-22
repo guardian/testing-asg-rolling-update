@@ -1,0 +1,56 @@
+name: CI
+on:
+  pull_request:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+# Ensure we only ever have one build running at a time.
+# If we push twice in quick succession, the first build will be stopped once the second starts.
+# This avoids any race conditions.
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  CI:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
+      # These permissions are required by guardian/actions-riff-raff...
+      id-token: write # ...to exchange an OIDC JWT ID token for AWS credentials
+      pull-requests: write #...to comment on PRs
+
+    steps:
+      # Checkout the branch
+      - uses: actions/checkout@v4
+
+      # Node is needed for CDK
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: npm
+          cache-dependency-path: 'package-lock.json'
+
+      - run: |
+          npm ci
+          npm run lint
+          npm test
+          npm run synth
+
+      # Upload build artifacts to Riff-Raff (well, S3)
+      - uses: guardian/actions-riff-raff@v4
+        with:
+          projectName: playground::testing-asg-rolling-update
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          roleArn: ${{ secrets.GU_RIFF_RAFF_ROLE_ARN }}
+          commentingStage: 'CODE'
+          configPath: cdk.out/riff-raff.yaml
+          contentDirectories: |
+            cdk.out:
+              - cdk.out
+            testing-asg-rolling-update:
+              - dist
