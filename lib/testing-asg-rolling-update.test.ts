@@ -8,6 +8,7 @@ describe('The TestingAsgRollingUpdate stack', () => {
 		const stack = new TestingAsgRollingUpdate(app, 'TestingAsgRollingUpdate', {
 			stack: 'playground',
 			stage: 'TEST',
+			app: 'testing-asg-rolling-update',
 			buildIdentifier: 'ABC',
 		});
 		const template = Template.fromStack(stack);

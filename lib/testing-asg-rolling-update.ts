@@ -8,6 +8,7 @@ import { Duration, Tags } from 'aws-cdk-lib';
 import { InstanceClass, InstanceSize, InstanceType } from 'aws-cdk-lib/aws-ec2';
 
 interface TestingAsgRollingUpdateProps extends GuStackProps {
+	app: string;
 	buildIdentifier: 'ABC' | 'XYZ' | '500';
 }
 
@@ -15,9 +16,8 @@ export class TestingAsgRollingUpdate extends GuStack {
 	constructor(scope: App, id: string, props: TestingAsgRollingUpdateProps) {
 		super(scope, id, props);
 
-		const { buildIdentifier } = props;
+		const { app, buildIdentifier } = props;
 
-		const app = 'testing-asg-rolling-update';
 		const domainName = `${app}.code.dev-gutools.co.uk`;
 
 		const { loadBalancer, autoScalingGroup } = new GuEc2AppExperimental(this, {

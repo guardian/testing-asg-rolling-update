@@ -6,6 +6,7 @@ const app = new GuRoot();
 new TestingAsgRollingUpdate(app, 'TestingAsgRollingUpdate-euwest-1-CODE', {
 	stack: 'playground',
 	stage: 'CODE',
+	app: 'testing-asg-rolling-update',
 	env: { region: 'eu-west-1' },
 	buildIdentifier: 'ABC',
 });

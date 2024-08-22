@@ -785,6 +785,10 @@ exports[`The TestingAsgRollingUpdate stack matches the snapshot 1`] = `
         ],
         "Tags": [
           {
+            "Key": "App",
+            "Value": "testing-asg-rolling-update",
+          },
+          {
             "Key": "gu:cdk:version",
             "Value": "TEST",
           },
