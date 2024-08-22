@@ -8,11 +8,11 @@ import { NoDesiredAsgRollingUpdate } from '../lib/no-desired-asg-rolling-update'
 const app = new App();
 
 new BasicAsgRollingUpdate(app, {
-	buildIdentifier: 'XYZ',
+	buildIdentifier: '500',
 });
 
 new NoDesiredAsgRollingUpdate(app, {
-	buildIdentifier: 'XYZ',
+	buildIdentifier: '500',
 });
 
 /*
