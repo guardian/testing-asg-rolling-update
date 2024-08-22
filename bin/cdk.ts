@@ -7,5 +7,5 @@ new TestingAsgRollingUpdate(app, 'TestingAsgRollingUpdate-euwest-1-CODE', {
 	stack: 'playground',
 	stage: 'CODE',
 	env: { region: 'eu-west-1' },
-	buildIdentifier: '500',
+	buildIdentifier: 'ABC',
 });
