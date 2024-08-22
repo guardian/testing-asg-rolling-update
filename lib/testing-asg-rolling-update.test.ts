@@ -8,6 +8,7 @@ describe('The TestingAsgRollingUpdate stack', () => {
 		const stack = new TestingAsgRollingUpdate(app, 'TestingAsgRollingUpdate', {
 			stack: 'playground',
 			stage: 'TEST',
+			buildIdentifier: 'ABC',
 		});
 		const template = Template.fromStack(stack);
 		expect(template.toJSON()).toMatchSnapshot();

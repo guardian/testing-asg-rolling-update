@@ -1,9 +1,63 @@
+import { GuPlayApp } from '@guardian/cdk';
+import { AccessScope } from '@guardian/cdk/lib/constants';
 import type { GuStackProps } from '@guardian/cdk/lib/constructs/core';
 import { GuStack } from '@guardian/cdk/lib/constructs/core';
+import { GuCname } from '@guardian/cdk/lib/constructs/dns';
 import type { App } from 'aws-cdk-lib';
+import { Duration, Tags } from 'aws-cdk-lib';
+import { InstanceClass, InstanceSize, InstanceType } from 'aws-cdk-lib/aws-ec2';
+
+interface TestingAsgRollingUpdateProps extends GuStackProps {
+	buildIdentifier: 'ABC' | 'XYZ' | '500';
+}
 
 export class TestingAsgRollingUpdate extends GuStack {
-	constructor(scope: App, id: string, props: GuStackProps) {
+	constructor(scope: App, id: string, props: TestingAsgRollingUpdateProps) {
 		super(scope, id, props);
+
+		const { buildIdentifier } = props;
+
+		const app = 'testing-asg-rolling-update';
+		const domainName = `${app}.gutools.co.uk`;
+
+		const { loadBalancer, autoScalingGroup } = new GuPlayApp(this, {
+			app,
+			instanceType: InstanceType.of(InstanceClass.T4G, InstanceSize.MICRO),
+			access: { scope: AccessScope.PUBLIC },
+			userData: {
+				distributable: {
+					fileName: `${app}_${buildIdentifier}.deb`,
+					executionStatement: `dpkg -i /${app}/${app}_${buildIdentifier}.deb`,
+				},
+			},
+			certificateProps: {
+				domainName,
+			},
+			monitoringConfiguration: { noMonitoring: true },
+			scaling: {
+				minimumInstances: 1,
+			},
+			applicationLogging: {
+				enabled: true,
+				systemdUnitName: app,
+			},
+			imageRecipe: 'developerPlayground-arm64-java11',
+		});
+
+		new GuCname(this, 'DNS', {
+			app,
+			ttl: Duration.hours(1),
+			domainName,
+			resourceRecord: loadBalancer.loadBalancerDnsName,
+		});
+
+		const { GITHUB_RUN_NUMBER = 'unknown', GITHUB_SHA = 'unknown' } =
+			process.env;
+
+		this.addMetadata('gu:build:number', GITHUB_RUN_NUMBER);
+		this.addMetadata('gu:build:sha', GITHUB_SHA);
+
+		Tags.of(autoScalingGroup).add('gu:build:number', GITHUB_RUN_NUMBER);
+		Tags.of(autoScalingGroup).add('gu:build:sha', GITHUB_SHA);
 	}
 }
