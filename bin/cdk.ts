@@ -12,7 +12,7 @@ new BasicAsgRollingUpdate(app, {
 });
 
 new NoDesiredAsgRollingUpdate(app, {
-	buildIdentifier: 'ABC',
+	buildIdentifier: 'XYZ',
 });
 
 /*
