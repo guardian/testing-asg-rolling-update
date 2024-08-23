@@ -9,15 +9,15 @@ import { ScalingAsgRollingUpdate } from '../lib/scaling-asg-rolling-update';
 const app = new App();
 
 new BasicAsgRollingUpdate(app, {
-	buildIdentifier: 'XYZ',
+	buildIdentifier: 'ABC',
 });
 
 new NoDesiredAsgRollingUpdate(app, {
-	buildIdentifier: 'XYZ',
+	buildIdentifier: 'ABC',
 });
 
 new ScalingAsgRollingUpdate(app, {
-	buildIdentifier: 'XYZ',
+	buildIdentifier: 'ABC',
 });
 
 /*
