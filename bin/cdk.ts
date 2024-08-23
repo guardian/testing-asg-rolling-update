@@ -4,6 +4,7 @@ import { RiffRaffYamlFile } from '@guardian/cdk/lib/riff-raff-yaml-file';
 import { App } from 'aws-cdk-lib';
 import { BasicAsgRollingUpdate } from '../lib/basic-asg-rolling-update';
 import { NoDesiredAsgRollingUpdate } from '../lib/no-desired-asg-rolling-update';
+import { ScalingAsgRollingUpdate } from '../lib/scaling-asg-rolling-update';
 
 const app = new App();
 
@@ -12,6 +13,10 @@ new BasicAsgRollingUpdate(app, {
 });
 
 new NoDesiredAsgRollingUpdate(app, {
+	buildIdentifier: 'ABC',
+});
+
+new ScalingAsgRollingUpdate(app, {
 	buildIdentifier: 'ABC',
 });
 
