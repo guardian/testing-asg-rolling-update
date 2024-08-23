@@ -29,3 +29,5 @@ To make these easier to search, a separate CloudFormation stack is created for e
 
 > [!TIP]
 > See [CONTRIBUTING.md](./CONTRIBUTING.md) for details on adding a new CloudFormation stack.
+
+Check the [observations](./observations) directory to learn about our findings.
