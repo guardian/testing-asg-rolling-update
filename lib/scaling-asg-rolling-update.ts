@@ -3,7 +3,7 @@ import { GuStack } from '@guardian/cdk/lib/constructs/core';
 import { GuCname } from '@guardian/cdk/lib/constructs/dns';
 import { GuEc2AppExperimental } from '@guardian/cdk/lib/experimental/patterns/ec2-app';
 import type { App } from 'aws-cdk-lib';
-import { Duration } from 'aws-cdk-lib';
+import { Duration, Tags } from 'aws-cdk-lib';
 import { InstanceClass, InstanceSize, InstanceType } from 'aws-cdk-lib/aws-ec2';
 
 interface ScalingAsgRollingUpdateProps {
@@ -51,6 +51,13 @@ export class ScalingAsgRollingUpdate extends GuStack {
 			},
 			imageRecipe: 'developerPlayground-arm64-java11',
 		});
+
+		// The pre-built application debian file's service name is `testing-asg-rolling-update`.
+		// Overwrite this tag, which GuCDK sets as the `app` value, so logs are shipped.
+		Tags.of(autoScalingGroup).add(
+			'SystemdUnit',
+			'testing-asg-rolling-update.service',
+		);
 
 		autoScalingGroup.scaleOnRequestCount('ScaleOnRequest', {
 			targetRequestsPerMinute: 5,

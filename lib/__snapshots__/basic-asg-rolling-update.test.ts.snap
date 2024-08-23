@@ -167,7 +167,7 @@ exports[`The BasicAsgRollingUpdate stack matches the snapshot 1`] = `
           {
             "Key": "SystemdUnit",
             "PropagateAtLaunch": true,
-            "Value": "basic.service",
+            "Value": "testing-asg-rolling-update.service",
           },
         ],
         "TargetGroupARNs": [

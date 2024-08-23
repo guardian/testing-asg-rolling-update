@@ -166,7 +166,7 @@ exports[`The NoDesiredAsgRollingUpdate stack matches the snapshot 1`] = `
           {
             "Key": "SystemdUnit",
             "PropagateAtLaunch": true,
-            "Value": "no-desired.service",
+            "Value": "testing-asg-rolling-update.service",
           },
         ],
         "TargetGroupARNs": [
