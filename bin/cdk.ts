@@ -17,7 +17,7 @@ new NoDesiredAsgRollingUpdate(app, {
 });
 
 new ScalingAsgRollingUpdate(app, {
-	buildIdentifier: 'ABC',
+	buildIdentifier: 'XYZ',
 });
 
 /*
