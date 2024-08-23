@@ -27,6 +27,11 @@ During each test, we'll be observing the CloudFormation event log, the ASG activ
 
 To make these easier to search, a separate CloudFormation stack is created for each scenario.
 
+The following CFN stacks are available in the [Developer Playground account](https://janus.gutools.co.uk/console?permissionId=developerPlayground-dev&tzOffset=1):
+- `playground-CODE-basic-asg-rolling-update` created from [basic-asg-rolling-update.ts](./lib/basic-asg-rolling-update.ts), accessed via https://basic.rolling-update.gutools.co.uk/tags
+- `playground-CODE-no-desired-asg-rolling-update` created from [no-desired-asg-rolling-update.ts](./lib/no-desired-asg-rolling-update.ts), accessed via https://no-desired.rolling-update.gutools.co.uk/tags
+- `playground-CODE-scaling-asg-rolling-update` created from [scaling-asg-rolling-update.ts](./lib/scaling-asg-rolling-update.ts), accessed via https://scaling.rolling-update.gutools.co.uk/tags
+
 > [!TIP]
 > See [CONTRIBUTING.md](./CONTRIBUTING.md) for details on adding a new CloudFormation stack.
 
