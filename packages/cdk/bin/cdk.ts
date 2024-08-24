@@ -13,15 +13,15 @@ const eventForwarder = new EventForwarder(app);
 
 [
 	new BasicAsgRollingUpdate(app, {
-		buildIdentifier: 'XYZ',
+		buildIdentifier: 'ABC',
 	}),
 
 	new NoDesiredAsgRollingUpdate(app, {
-		buildIdentifier: 'XYZ',
+		buildIdentifier: 'ABC',
 	}),
 
 	new ScalingAsgRollingUpdate(app, {
-		buildIdentifier: 'XYZ',
+		buildIdentifier: 'ABC',
 	}),
 ].forEach((_) => {
 	// Configure Riff-Raff to deploy each application stack after the EventForwarder stack has finished.
