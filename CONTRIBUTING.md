@@ -61,7 +61,7 @@ For example:
 
 ## Creating a new stack
 
-First, define it in [lib directory](./lib). It would look roughly like this:
+First, define it in [lib directory](./packages/cdk/lib). It would look roughly like this:
 
 ```ts
 interface MyTestStackProps {
@@ -99,11 +99,11 @@ export class MyTestStack extends GuStack {
 
 You can customise further customise it, for example adding a scaling policy.
 
-Then, instantiate an instance of the class in [cdk.ts](./bin/cdk.ts).
+Then, instantiate an instance of the class in [cdk.ts](./packages/cdk/bin/cdk.ts).
 
 Then, push the changes to GitHub, and wait for a build to be created.
 
 Finally, deploy the project [`playground::testing-asg-rolling-update` with Riff-Raff](https://riffraff.gutools.co.uk/deployment/history?projectName=playground%3A%3Atesting-asg-rolling-update&page=1)
 and observe your new CloudFormation stack being created in the [Developer Playground AWS account](https://janus.gutools.co.uk/console?permissionId=developerPlayground-dev&tzOffset=1).
 
-[^1]: Edit [cdk.ts](./bin/cdk.ts), push to GitHub, build w/GitHub Actions, deploy w/Riff-Raff.
+[^1]: Edit [cdk.ts](./packages/cdk/bin/cdk.ts), push to GitHub, build w/GitHub Actions, deploy w/Riff-Raff.
