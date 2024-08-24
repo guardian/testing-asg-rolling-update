@@ -4,6 +4,7 @@ import type { App } from 'aws-cdk-lib';
 import { Arn } from 'aws-cdk-lib';
 import { Rule } from 'aws-cdk-lib/aws-events';
 import { LambdaFunction } from 'aws-cdk-lib/aws-events-targets';
+import { Effect, PolicyStatement } from 'aws-cdk-lib/aws-iam';
 import { LoggingFormat, Runtime } from 'aws-cdk-lib/aws-lambda';
 
 export class EventForwarder extends GuStack {
@@ -33,6 +34,20 @@ export class EventForwarder extends GuStack {
 			 */
 			loggingFormat: LoggingFormat.TEXT,
 		});
+
+		// This isn't lest privilege, but couldn't get a `condition` to work
+		lambda.addToRolePolicy(
+			new PolicyStatement({
+				effect: Effect.ALLOW,
+				actions: ['autoscaling:DescribeAutoScalingGroups'],
+				resources: ['*'],
+				// conditions: {
+				// 	StringEquals: {
+				// 		'aws:ResourceTag/gu:repo': this.repositoryName,
+				// 	},
+				// },
+			}),
+		);
 
 		new Rule(this, 'CloudformationEventForwarderRule', {
 			targets: [new LambdaFunction(lambda)],

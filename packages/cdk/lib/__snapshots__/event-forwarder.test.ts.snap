@@ -317,6 +317,11 @@ exports[`The EventForwarder stack matches the snapshot 1`] = `
                 ],
               },
             },
+            {
+              "Action": "autoscaling:DescribeAutoScalingGroups",
+              "Effect": "Allow",
+              "Resource": "*",
+            },
           ],
           "Version": "2012-10-17",
         },
