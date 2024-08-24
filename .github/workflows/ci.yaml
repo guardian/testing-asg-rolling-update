@@ -1,7 +1,12 @@
+# Find full documentation here https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions
 name: CI
+
 on:
   pull_request:
+
+  # Manual invocation.
   workflow_dispatch:
+
   push:
     branches:
       - main
@@ -25,32 +30,41 @@ jobs:
       pull-requests: write #...to comment on PRs
 
     steps:
-      # Checkout the branch
       - uses: actions/checkout@v4
 
-      # Node is needed for CDK
-      - uses: actions/setup-node@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
-          cache: npm
-          cache-dependency-path: 'package-lock.json'
+          cache: 'npm'
 
-      - run: |
-          npm ci
-          npm run lint
-          npm test
-          npm run synth
+      - name: Install dependencies
+        run: npm ci
 
-      # Upload build artifacts to Riff-Raff (well, S3)
+      - name: Lint
+        run: npm run lint
+
+      - name: test
+        run: npm test
+
+      - name: Build
+        run: npm run build
+
+      - name: Synth CDK
+        run: npm -w cdk run synth
+
+      # See https://github.com/guardian/actions-riff-raff
       - uses: guardian/actions-riff-raff@v4
         with:
           projectName: playground::testing-asg-rolling-update
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           roleArn: ${{ secrets.GU_RIFF_RAFF_ROLE_ARN }}
           commentingStage: 'CODE'
-          configPath: cdk.out/riff-raff.yaml
+          configPath: packages/cdk/cdk.out/riff-raff.yaml
           contentDirectories: |
             cdk.out:
-              - cdk.out
+              - packages/cdk/cdk.out
             testing-asg-rolling-update:
               - dist
+            event-forwarder:
+              - packages/lambda/dist/event-forwarder.zip

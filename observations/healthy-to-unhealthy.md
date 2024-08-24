@@ -1,8 +1,8 @@
 # What happens when deploying a failing healthcheck?
 
 In this test we went from [application version](../dist) `ABC` to `500` in the stacks:
-- [`BasicAsgRollingUpdate`](../lib/basic-asg-rolling-update.ts) (CFN stack `playground-CODE-basic-asg-rolling-update`)
-- [`NoDesiredAsgRollingUpdate`](../lib/no-desired-asg-rolling-update.ts) (CFN stack `playground-CODE-no-desired-asg-rolling-update`)
+- [`BasicAsgRollingUpdate`](../packages/cdk/lib/basic-asg-rolling-update.ts) (CFN stack `playground-CODE-basic-asg-rolling-update`)
+- [`NoDesiredAsgRollingUpdate`](../packages/cdk/lib/no-desired-asg-rolling-update.ts) (CFN stack `playground-CODE-no-desired-asg-rolling-update`)
 
 ## Highlights
 The ASG should have an explicit desired capacity. 
