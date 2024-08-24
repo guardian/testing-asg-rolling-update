@@ -5,11 +5,13 @@
   "scripts": {
     "start": "tsx --env-file=.env src/run-locally.ts",
     "prebuild": "rm -rf dist",
-    "build": "esbuild src/index.ts --bundle --platform=node --target=node20 --outdir=dist",
+    "build": "esbuild src/index.ts --bundle --platform=node --target=node20 --outdir=dist --external:@aws-sdk",
     "postbuild": "cd dist && zip -r event-forwarder.zip ."
   },
   "devDependencies": {
     "@types/aws-lambda": "8.10.143",
+    "@aws-sdk/client-auto-scaling": "3.637.0",
+    "@aws-sdk/credential-providers": "3.637.0",
     "esbuild": "0.23.1"
   }
 }

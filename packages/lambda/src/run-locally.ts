@@ -34,4 +34,4 @@ export const sampleCloudformationEvent: CloudformationEvent = {
 	},
 };
 
-main(sampleCloudformationEvent);
+await main(sampleCloudformationEvent);

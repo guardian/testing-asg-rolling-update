@@ -1,7 +1,7 @@
 import type { EventBridgeEvent } from 'aws-lambda';
 
 export type CloudformationEvent = EventBridgeEvent<
-	'CloudFormation Resource Status Change',
+	string,
 	{
 		'stack-id': string;
 		'logical-resource-id': string;
@@ -30,3 +30,7 @@ export type AutoscalingEvent = EventBridgeEvent<
 		Cause: string;
 	}
 >;
+
+export type HydratedEvent = (CloudformationEvent | AutoscalingEvent) & {
+	cloudformationStackName: string;
+};
