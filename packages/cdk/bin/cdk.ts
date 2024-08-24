@@ -3,21 +3,29 @@ import 'source-map-support/register';
 import { RiffRaffYamlFile } from '@guardian/cdk/lib/riff-raff-yaml-file';
 import { App } from 'aws-cdk-lib';
 import { BasicAsgRollingUpdate } from '../lib/basic-asg-rolling-update';
+import { EventForwarder } from '../lib/event-forwarder';
 import { NoDesiredAsgRollingUpdate } from '../lib/no-desired-asg-rolling-update';
 import { ScalingAsgRollingUpdate } from '../lib/scaling-asg-rolling-update';
 
 const app = new App();
 
-new BasicAsgRollingUpdate(app, {
-	buildIdentifier: 'ABC',
-});
+const eventForwarder = new EventForwarder(app);
 
-new NoDesiredAsgRollingUpdate(app, {
-	buildIdentifier: 'ABC',
-});
+[
+	new BasicAsgRollingUpdate(app, {
+		buildIdentifier: 'ABC',
+	}),
 
-new ScalingAsgRollingUpdate(app, {
-	buildIdentifier: 'ABC',
+	new NoDesiredAsgRollingUpdate(app, {
+		buildIdentifier: 'ABC',
+	}),
+
+	new ScalingAsgRollingUpdate(app, {
+		buildIdentifier: 'ABC',
+	}),
+].forEach((_) => {
+	// Configure Riff-Raff to deploy each application stack after the EventForwarder stack has finished.
+	_.addDependency(eventForwarder);
 });
 
 /*
