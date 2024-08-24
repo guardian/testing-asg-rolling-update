@@ -15,6 +15,9 @@ See also https://github.com/guardian/riff-raff/issues/1342.
 This repository is used to understand the behaviour of [`AutoScalingRollingUpdate` policy](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-attribute-updatepolicy.html#cfn-attributes-updatepolicy-rollingupdate).
 Specifically, if it enables services to scale _during_ deployment.
 
+> [!TIP]
+> A dashboard combining CloudFormation events, ASG activity and ASG metrics is available here - https://metrics.gutools.co.uk/d/cdvsv1d6vhp1cb/testing-asg-rolling-update.
+
 The tests performed look to cover permutations of:
 - Healthcheck passing/failing
 - Scale out during deployment
