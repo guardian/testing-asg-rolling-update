@@ -43,7 +43,7 @@ export class BasicAsgRollingUpdate extends GuStack {
 			},
 			monitoringConfiguration: { noMonitoring: true },
 			scaling: {
-				minimumInstances: 5,
+				minimumInstances: 3,
 			},
 			applicationLogging: {
 				enabled: true,
