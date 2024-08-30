@@ -43,7 +43,7 @@ The deployment works correctly, regardless of whether a desired capacity is spec
 
 6. Both stacks have the correct number of instances after the deployment (5).
 
-Full details for both stacks can be seen in the dashboard (for [`basic`](https://metrics.gutools.co.uk/goto/6SHvkB3IR?orgId=1) and [`no-desired`](https://metrics.gutools.co.uk/goto/GUQvzBqIg?orgId=1)).
+Full details for both stacks can be seen in the dashboard (for [`basic`](https://metrics.gutools.co.uk/d/cdvsv1d6vhp1cb/testing-asg-rolling-update?orgId=1&from=1724769840000&to=1724770319000&var-App=basic) and [`no-desired`]([https://metrics.gutools.co.uk/goto/GUQvzBqIg?orgId=1](https://metrics.gutools.co.uk/d/cdvsv1d6vhp1cb/testing-asg-rolling-update?orgId=1&from=1724769840000&to=1724770319000&var-App=no-desired))).
 
 [^1]: There is also an explicit `SetDesiredCapacity` API call in both cases, which seems unnecessary.
     
