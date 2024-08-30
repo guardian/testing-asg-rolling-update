@@ -32,7 +32,7 @@ The deployment works correctly, regardless of whether a desired capacity is spec
    
 5. Once the old instances are terminated the update completes:
 
-   `playground-CODE-no-desired-asg-rolling-update`:
+   `playground-CODE-basic-asg-rolling-update`:
    > Successfully terminated instance(s) [i-05c3716abc787c0e7,i-07fa3ab24b8a2aafc,i-05a6bbbf3604d1c6d,i-0975853c6e1954e88,i-0dcdb5cb3ac8f57e8] (Progress 100%).
 
    `playground-CODE-no-desired-asg-rolling-update`: 
@@ -43,7 +43,7 @@ The deployment works correctly, regardless of whether a desired capacity is spec
 
 6. Both stacks have the correct number of instances after the deployment (5).
 
-Full details for both stacks can be seen in the dashboard (for [`basic`](https://metrics.gutools.co.uk/d/cdvsv1d6vhp1cb/testing-asg-rolling-update?orgId=1&from=1724769840000&to=1724770319000&var-App=basic) and [`no-desired`]([https://metrics.gutools.co.uk/goto/GUQvzBqIg?orgId=1](https://metrics.gutools.co.uk/d/cdvsv1d6vhp1cb/testing-asg-rolling-update?orgId=1&from=1724769840000&to=1724770319000&var-App=no-desired))).
+Full details for both stacks can be seen in the dashboard (for [`basic`](https://metrics.gutools.co.uk/d/cdvsv1d6vhp1cb/testing-asg-rolling-update?orgId=1&from=1724769840000&to=1724770319000&var-App=basic) and [`no-desired`](https://metrics.gutools.co.uk/d/cdvsv1d6vhp1cb/testing-asg-rolling-update?orgId=1&from=1724769840000&to=1724770319000&var-App=no-desired)).
 
 [^1]: There is also an explicit `SetDesiredCapacity` API call in both cases, which seems unnecessary.
     
