@@ -12,7 +12,9 @@ The current implementation leads to a temporary scale down during deployment; th
 I think this could be resolved if:
 
 a) We restricted [maxBatchSize](https://github.com/guardian/cdk/blob/00ef0467d7797629015f088f969e2bcdab472046/src/experimental/patterns/ec2-app.ts#L49) to the minimum capacity of the ASG (although this would slow down some deployments a bit).
+
 OR
+
 b) We (Riff-Raff?) injected the desired capacity at the start of the deployment [here](https://github.com/guardian/cdk/blob/00ef0467d7797629015f088f969e2bcdab472046/src/experimental/patterns/ec2-app.ts#L50), instead of the current solution which defaults to the minimum capacity.
 
 ## Timeline
