@@ -4,6 +4,7 @@ import { GuCname } from '@guardian/cdk/lib/constructs/dns';
 import { GuEc2AppExperimental } from '@guardian/cdk/lib/experimental/patterns/ec2-app';
 import type { App } from 'aws-cdk-lib';
 import { Duration, Tags } from 'aws-cdk-lib';
+import type { CfnAutoScalingGroup } from 'aws-cdk-lib/aws-autoscaling';
 import { InstanceClass, InstanceSize, InstanceType } from 'aws-cdk-lib/aws-ec2';
 
 interface ScalingAsgRollingUpdateProps {
@@ -63,6 +64,9 @@ export class ScalingAsgRollingUpdate extends GuStack {
 		autoScalingGroup.scaleOnRequestCount('ScaleOnRequest', {
 			targetRequestsPerMinute: 5,
 		});
+
+		const cfnAsg = autoScalingGroup.node.defaultChild as CfnAutoScalingGroup;
+		cfnAsg.desiredCapacity = undefined;
 
 		new GuCname(this, 'DNS', {
 			app,

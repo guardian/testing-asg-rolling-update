@@ -110,7 +110,6 @@ exports[`The ScalingAsgRollingUpdate stack matches the snapshot 1`] = `
         },
       },
       "Properties": {
-        "DesiredCapacity": "3",
         "HealthCheckGracePeriod": 120,
         "HealthCheckType": "ELB",
         "LaunchTemplate": {
