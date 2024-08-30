@@ -43,7 +43,8 @@ export class ScalingAsgRollingUpdate extends GuStack {
 			},
 			monitoringConfiguration: { noMonitoring: true },
 			scaling: {
-				minimumInstances: 5,
+				minimumInstances: 3,
+				maximumInstances: 9,
 			},
 			applicationLogging: {
 				enabled: true,

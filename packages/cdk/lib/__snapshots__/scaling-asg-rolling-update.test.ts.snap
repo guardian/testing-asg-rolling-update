@@ -105,12 +105,12 @@ exports[`The ScalingAsgRollingUpdate stack matches the snapshot 1`] = `
           "MinSuccessfulInstancesPercent": 100,
         },
         "ResourceSignal": {
-          "Count": 5,
+          "Count": 3,
           "Timeout": "PT5M",
         },
       },
       "Properties": {
-        "DesiredCapacity": "5",
+        "DesiredCapacity": "3",
         "HealthCheckGracePeriod": 120,
         "HealthCheckType": "ELB",
         "LaunchTemplate": {
@@ -124,13 +124,13 @@ exports[`The ScalingAsgRollingUpdate stack matches the snapshot 1`] = `
             ],
           },
         },
-        "MaxSize": "10",
+        "MaxSize": "9",
         "MetricsCollection": [
           {
             "Granularity": "1Minute",
           },
         ],
-        "MinSize": "5",
+        "MinSize": "3",
         "Tags": [
           {
             "Key": "App",
@@ -182,8 +182,8 @@ exports[`The ScalingAsgRollingUpdate stack matches the snapshot 1`] = `
       "Type": "AWS::AutoScaling::AutoScalingGroup",
       "UpdatePolicy": {
         "AutoScalingRollingUpdate": {
-          "MaxBatchSize": 10,
-          "MinInstancesInService": 5,
+          "MaxBatchSize": 9,
+          "MinInstancesInService": 3,
           "MinSuccessfulInstancesPercent": 100,
           "SuspendProcesses": [],
           "WaitOnResourceSignals": true,
