@@ -19,13 +19,16 @@ instead of the current solution which defaults to the minimum capacity.
 3. The service scales up to 6 instances (from 3)
 4. [Build number 80 was deployed](https://riffraff.gutools.co.uk/deployment/view/da3d810c-d055-4765-9602-141233e82b45) (which updates to build `XYZ`)
 5. The CFN stack `playground-CODE-scaling-asg-rolling-update` started updating:
+
    First:
    > Rolling update initiated. Terminating 6 obsolete instance(s) in batches of 6, while keeping at least 3 instance(s) in service. Waiting on resource signals with a timeout of PT5M when new instances are added to the autoscaling group.
+   
    Then the ASG capacity is updated:
    > Temporarily setting autoscaling group MinSize and DesiredCapacity to 9.
-6. Once three `SUCCESS` signals are received, six instances are terminated.
-7. Three more new instances are launched.
-8. Once three more `SUCCESS` signals are received, the deployment completes.
+   > 
+7. Once three `SUCCESS` signals are received, six instances are terminated.
+8. Three more new instances are launched.
+9. Once three more `SUCCESS` signals are received, the deployment completes.
 
 Unfortunately this means that the deployment causes us to temporarily run with 3 instances serving traffic when we really need 6 to cope with the load
 (see [healthy hosts panel](https://metrics.gutools.co.uk/goto/Tt1IPB3SR?orgId=1)).
