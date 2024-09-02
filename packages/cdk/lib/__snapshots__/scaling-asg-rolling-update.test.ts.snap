@@ -203,7 +203,7 @@ exports[`The ScalingAsgRollingUpdate stack matches the snapshot 1`] = `
       "UpdatePolicy": {
         "AutoScalingRollingUpdate": {
           "MaxBatchSize": 9,
-          "MinInstancesInService": 3,
+          "MinInstancesInService": 9,
           "MinSuccessfulInstancesPercent": 100,
           "SuspendProcesses": [],
           "WaitOnResourceSignals": true,

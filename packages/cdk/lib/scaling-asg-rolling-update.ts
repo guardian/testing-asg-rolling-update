@@ -93,6 +93,13 @@ export class ScalingAsgRollingUpdate extends GuStack {
 
 		const cfnAsg = autoScalingGroup.node.defaultChild as CfnAutoScalingGroup;
 		cfnAsg.desiredCapacity = undefined;
+		cfnAsg.cfnOptions.updatePolicy = {
+			...cfnAsg.cfnOptions.updatePolicy,
+			autoScalingRollingUpdate: {
+				...cfnAsg.cfnOptions.updatePolicy?.autoScalingRollingUpdate,
+				minInstancesInService: 9,
+			},
+		};
 
 		new GuCname(this, 'DNS', {
 			app,
