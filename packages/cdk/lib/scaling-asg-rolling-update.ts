@@ -3,8 +3,9 @@ import { GuStack } from '@guardian/cdk/lib/constructs/core';
 import { GuCname } from '@guardian/cdk/lib/constructs/dns';
 import { GuEc2AppExperimental } from '@guardian/cdk/lib/experimental/patterns/ec2-app';
 import type { App } from 'aws-cdk-lib';
-import { Duration, Tags } from 'aws-cdk-lib';
+import { CfnOutput, Duration, Tags } from 'aws-cdk-lib';
 import type { CfnAutoScalingGroup } from 'aws-cdk-lib/aws-autoscaling';
+import { CfnScalingPolicy } from 'aws-cdk-lib/aws-autoscaling';
 import { InstanceClass, InstanceSize, InstanceType } from 'aws-cdk-lib/aws-ec2';
 
 interface ScalingAsgRollingUpdateProps {
@@ -61,8 +62,33 @@ export class ScalingAsgRollingUpdate extends GuStack {
 			'testing-asg-rolling-update.service',
 		);
 
-		autoScalingGroup.scaleOnRequestCount('ScaleOnRequest', {
-			targetRequestsPerMinute: 5,
+		const scaleOutPolicy = new CfnScalingPolicy(this, 'ScaleOut', {
+			autoScalingGroupName: autoScalingGroup.autoScalingGroupName,
+			policyType: 'SimpleScaling',
+			adjustmentType: 'ChangeInCapacity',
+			scalingAdjustment: 1,
+		});
+
+		const scaleInPolicy = new CfnScalingPolicy(this, 'ScaleIn', {
+			autoScalingGroupName: autoScalingGroup.autoScalingGroupName,
+			policyType: 'SimpleScaling',
+			adjustmentType: 'ChangeInCapacity',
+			scalingAdjustment: -1,
+		});
+
+		new CfnOutput(this, 'ScaleOutArn', {
+			key: 'ScaleOutArn',
+			value: scaleOutPolicy.attrArn,
+		});
+
+		new CfnOutput(this, 'ScaleInArn', {
+			key: 'ScaleInArn',
+			value: scaleInPolicy.attrArn,
+		});
+
+		new CfnOutput(this, 'AutoscalingGroupName', {
+			key: 'AutoscalingGroupName',
+			value: autoScalingGroup.autoScalingGroupName,
 		});
 
 		const cfnAsg = autoScalingGroup.node.defaultChild as CfnAutoScalingGroup;
