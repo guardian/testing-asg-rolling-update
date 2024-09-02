@@ -97,7 +97,7 @@ export class ScalingAsgRollingUpdate extends GuStack {
 			...cfnAsg.cfnOptions.updatePolicy,
 			autoScalingRollingUpdate: {
 				...cfnAsg.cfnOptions.updatePolicy?.autoScalingRollingUpdate,
-				minInstancesInService: 9,
+				minInstancesInService: 8,
 			},
 		};
 
