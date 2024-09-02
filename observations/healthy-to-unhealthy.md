@@ -28,12 +28,12 @@ If the desired capacity is not explicitly provided, deploying a failing healthch
    - In the `playground-CODE-basic-asg-rolling-update` stack, there are 5 instances running artifact `ABC`.
    - In the `playground-CODE-no-desired-asg-rolling-update` stack, there are 10 instances running artifact `ABC`. This is over-capacity.
 
-   This can be seen on the [dashboard](https://metrics.gutools.co.uk/d/cdvsv1d6vhp1cb/testing-asg-rolling-update?orgId=1&from=1724532300000&to=1724533020000&var-asg=playground-CODE-no-desired-asg-rolling-update-AutoScalingGroupNodesiredASG5E3ACDE4-LvfH72IU35Ty).
+   This can be seen on the [dashboard](https://metrics.gutools.co.uk/d/cdvsv1d6vhp1cb/testing-asg-rolling-update?orgId=1&from=1724532300000&to=1724533020000&var-App=no-desired).
 
 5. We receive a failed deployment message, and create a fix.
    [Deploying it](https://riffraff.gutools.co.uk/deployment/view/f3b34dfd-7a37-44a1-8ffe-c8f3c97d453d) succeeds,
    However, the ASG without an explicit desired capacity remains over-capacity with 10 in-service instances.
 
-   This can be seen on the [dashboard](https://metrics.gutools.co.uk/d/cdvsv1d6vhp1cb/testing-asg-rolling-update?orgId=1&from=1724533020000&to=1724533380000&var-asg=playground-CODE-no-desired-asg-rolling-update-AutoScalingGroupNodesiredASG5E3ACDE4-LvfH72IU35Ty).
+   This can be seen on the [dashboard](https://metrics.gutools.co.uk/d/cdvsv1d6vhp1cb/testing-asg-rolling-update?orgId=1&from=1724533020000&to=1724533380000&var-App=no-desired).
 
-   The desired needs to be [manually reduced](https://metrics.gutools.co.uk/d/cdvsv1d6vhp1cb/testing-asg-rolling-update?orgId=1&var-asg=playground-CODE-no-desired-asg-rolling-update-AutoScalingGroupNodesiredASG5E3ACDE4-LvfH72IU35Ty&from=1724535000000&to=1724535600000). 
+   The desired needs to be [manually reduced](https://metrics.gutools.co.uk/d/cdvsv1d6vhp1cb/testing-asg-rolling-update?orgId=1&var-App=no-desired&from=1724535000000&to=1724535600000). 
