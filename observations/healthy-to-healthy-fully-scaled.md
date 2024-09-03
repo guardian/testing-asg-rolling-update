@@ -46,4 +46,4 @@ Full details can be seen via the [dashboard](https://metrics.gutools.co.uk/goto/
 
 ## Potential Mitigations
 
-See the potential mitigations described in the partially-scaled scenario [TODO: add link once merged], which also apply here.
+See the [potential mitigations described in the partially-scaled scenario](healthy-to-healthy-partially-scaled.md#potential-mitigations), which also apply here.
