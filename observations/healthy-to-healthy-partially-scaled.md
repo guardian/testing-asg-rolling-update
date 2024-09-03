@@ -25,9 +25,9 @@ Some potential options for mitigating this problem are discussed below.
    Then the ASG capacity is updated:
    > Temporarily setting autoscaling group MinSize and DesiredCapacity to 9.
 
-7. Once three `SUCCESS` signals are received, six instances are terminated. _At this point we are under-provisioned._
-8. Three more new instances are launched. 
-9. Once three more `SUCCESS` signals are received, the deployment completes. _At this point we are provisioned correctly again._
+6. Once three `SUCCESS` signals are received, six instances are terminated. _At this point we are under-provisioned._
+7. Three more new instances are launched. 
+8. Once three more `SUCCESS` signals are received, the deployment completes. _At this point we are provisioned correctly again._
 
 Unfortunately this means that the deployment causes us to temporarily run with 3 instances serving traffic when we really need 6 to cope with the load
 (see [healthy hosts panel](https://metrics.gutools.co.uk/goto/Tt1IPB3SR?orgId=1)).
