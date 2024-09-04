@@ -21,7 +21,8 @@ const eventForwarder = new EventForwarder(app);
 	}),
 
 	new ScalingAsgRollingUpdate(app, {
-		buildIdentifier: 'ABC',
+		buildIdentifier: '500',
+		minimumInstancesInService: 6,
 	}),
 ].forEach((_) => {
 	// Configure Riff-Raff to deploy each application stack after the EventForwarder stack has finished.
