@@ -10,6 +10,7 @@ import { InstanceClass, InstanceSize, InstanceType } from 'aws-cdk-lib/aws-ec2';
 
 interface ScalingAsgRollingUpdateProps {
 	buildIdentifier: 'ABC' | 'XYZ' | '500';
+	minimumInstancesInService?: number;
 }
 
 export class ScalingAsgRollingUpdate extends GuStack {
@@ -93,6 +94,16 @@ export class ScalingAsgRollingUpdate extends GuStack {
 
 		const cfnAsg = autoScalingGroup.node.defaultChild as CfnAutoScalingGroup;
 		cfnAsg.desiredCapacity = undefined;
+
+		if (props.minimumInstancesInService) {
+			cfnAsg.cfnOptions.updatePolicy = {
+				...cfnAsg.cfnOptions.updatePolicy,
+				autoScalingRollingUpdate: {
+					...cfnAsg.cfnOptions.updatePolicy?.autoScalingRollingUpdate,
+					minInstancesInService: props.minimumInstancesInService,
+				},
+			};
+		}
 
 		new GuCname(this, 'DNS', {
 			app,
