@@ -26,7 +26,7 @@ No.
 When `AutoScalingRollingUpdate` is used, the CloudFormation update will remain in the `UPDATE_IN_PROGRESS` state 
 until the correct number of `SUCCESS` signals have been received.
 
-If more `SUCCESS` signals are received (due to a scale-out mid-deployment) the CloudFormation update will happily continue.
+If more `SUCCESS` signals are received (due to a scale-out mid-deployment) the CloudFormation update will happily continue. However, `AutoScalingRollingUpdate` will still reset desired to match its original value on completion, meaning that it will scale the service down again in this scenario.
 
 If fewer `SUCCESS` signals are received (due to a scale-in mid-deployment) the CloudFormation update _could_ fail.
 There is no guarantee which instance will be terminated, with the the docs stating:
