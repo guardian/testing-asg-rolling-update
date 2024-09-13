@@ -46,7 +46,7 @@ exports[`The ScalingAsgRollingUpdate stack matches the snapshot 1`] = `
     "ScaleInArn": {
       "Value": {
         "Fn::GetAtt": [
-          "ScaleIn",
+          "AutoScalingGroupScalingScaleInA1C7C09B",
           "Arn",
         ],
       },
@@ -54,7 +54,7 @@ exports[`The ScalingAsgRollingUpdate stack matches the snapshot 1`] = `
     "ScaleOutArn": {
       "Value": {
         "Fn::GetAtt": [
-          "ScaleOut",
+          "AutoScalingGroupScalingScaleOut0D780FEC",
           "Arn",
         ],
       },
@@ -75,6 +75,11 @@ exports[`The ScalingAsgRollingUpdate stack matches the snapshot 1`] = `
       "Description": "SSM parameter containing the Name (not ARN) on the kinesis stream",
       "Type": "AWS::SSM::Parameter::Value<String>",
     },
+    "MinInstancesInServiceForscaling": {
+      "Default": 3,
+      "MaxValue": 8,
+      "Type": "Number",
+    },
     "VpcId": {
       "Default": "/account/vpc/primary/id",
       "Description": "Virtual Private Cloud to run EC2 instances within. Should NOT be the account default VPC.",
@@ -92,7 +97,7 @@ exports[`The ScalingAsgRollingUpdate stack matches the snapshot 1`] = `
     },
   },
   "Resources": {
-    "AsgReplacingUpdatePolicy78CF34D5": {
+    "AsgRollingUpdatePolicy2A1DDC6F": {
       "Properties": {
         "PolicyDocument": {
           "Statement": [
@@ -111,7 +116,7 @@ exports[`The ScalingAsgRollingUpdate stack matches the snapshot 1`] = `
           ],
           "Version": "2012-10-17",
         },
-        "PolicyName": "AsgReplacingUpdatePolicy78CF34D5",
+        "PolicyName": "AsgRollingUpdatePolicy2A1DDC6F",
         "Roles": [
           {
             "Ref": "InstanceRoleScaling7E871D7B",
@@ -203,15 +208,39 @@ exports[`The ScalingAsgRollingUpdate stack matches the snapshot 1`] = `
       "UpdatePolicy": {
         "AutoScalingRollingUpdate": {
           "MaxBatchSize": 9,
-          "MinInstancesInService": 3,
+          "MinInstancesInService": {
+            "Ref": "MinInstancesInServiceForscaling",
+          },
           "MinSuccessfulInstancesPercent": 100,
-          "SuspendProcesses": [],
+          "PauseTime": "PT5M",
+          "SuspendProcesses": [
+            "AlarmNotification",
+          ],
           "WaitOnResourceSignals": true,
         },
-        "AutoScalingScheduledAction": {
-          "IgnoreUnmodifiedGroupSizeProperties": true,
-        },
       },
+    },
+    "AutoScalingGroupScalingScaleInA1C7C09B": {
+      "Properties": {
+        "AdjustmentType": "ChangeInCapacity",
+        "AutoScalingGroupName": {
+          "Ref": "AutoScalingGroupScalingASG8AF02C37",
+        },
+        "PolicyType": "SimpleScaling",
+        "ScalingAdjustment": -1,
+      },
+      "Type": "AWS::AutoScaling::ScalingPolicy",
+    },
+    "AutoScalingGroupScalingScaleOut0D780FEC": {
+      "Properties": {
+        "AdjustmentType": "ChangeInCapacity",
+        "AutoScalingGroupName": {
+          "Ref": "AutoScalingGroupScalingASG8AF02C37",
+        },
+        "PolicyType": "SimpleScaling",
+        "ScalingAdjustment": 1,
+      },
+      "Type": "AWS::AutoScaling::ScalingPolicy",
     },
     "CertificateScaling767DD870": {
       "DeletionPolicy": "Retain",
@@ -675,28 +704,6 @@ exports[`The ScalingAsgRollingUpdate stack matches the snapshot 1`] = `
       },
       "Type": "AWS::IAM::Policy",
     },
-    "ScaleIn": {
-      "Properties": {
-        "AdjustmentType": "ChangeInCapacity",
-        "AutoScalingGroupName": {
-          "Ref": "AutoScalingGroupScalingASG8AF02C37",
-        },
-        "PolicyType": "SimpleScaling",
-        "ScalingAdjustment": -1,
-      },
-      "Type": "AWS::AutoScaling::ScalingPolicy",
-    },
-    "ScaleOut": {
-      "Properties": {
-        "AdjustmentType": "ChangeInCapacity",
-        "AutoScalingGroupName": {
-          "Ref": "AutoScalingGroupScalingASG8AF02C37",
-        },
-        "PolicyType": "SimpleScaling",
-        "ScalingAdjustment": 1,
-      },
-      "Type": "AWS::AutoScaling::ScalingPolicy",
-    },
     "SsmSshPolicy4CFC977E": {
       "Properties": {
         "PolicyDocument": {
@@ -870,6 +877,7 @@ exports[`The ScalingAsgRollingUpdate stack matches the snapshot 1`] = `
           "InstanceType": "t4g.micro",
           "MetadataOptions": {
             "HttpTokens": "required",
+            "InstanceMetadataTags": "enabled",
           },
           "SecurityGroupIds": [
             {
@@ -971,7 +979,8 @@ aws s3 cp 's3://",
 dpkg -i /scaling/testing-asg-rolling-update_ABC.deb
 # GuEc2AppExperimental UserData Start
 
-      INSTANCE_ID=$(ec2metadata --instance-id)
+      TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
+      INSTANCE_ID=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" "http://169.254.169.254/latest/meta-data/instance-id")
 
       STATE=$(aws elbv2 describe-target-health         --target-group-arn ",
                   {

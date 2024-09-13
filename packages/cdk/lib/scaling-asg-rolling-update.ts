@@ -62,14 +62,14 @@ export class ScalingAsgRollingUpdate extends GuStack {
 			'testing-asg-rolling-update.service',
 		);
 
-		const scaleOutPolicy = new CfnScalingPolicy(this, 'ScaleOut', {
+		const scaleOutPolicy = new CfnScalingPolicy(autoScalingGroup, 'ScaleOut', {
 			autoScalingGroupName: autoScalingGroup.autoScalingGroupName,
 			policyType: 'SimpleScaling',
 			adjustmentType: 'ChangeInCapacity',
 			scalingAdjustment: 1,
 		});
 
-		const scaleInPolicy = new CfnScalingPolicy(this, 'ScaleIn', {
+		const scaleInPolicy = new CfnScalingPolicy(autoScalingGroup, 'ScaleIn', {
 			autoScalingGroupName: autoScalingGroup.autoScalingGroupName,
 			policyType: 'SimpleScaling',
 			adjustmentType: 'ChangeInCapacity',

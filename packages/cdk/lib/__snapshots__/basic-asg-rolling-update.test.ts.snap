@@ -71,7 +71,7 @@ exports[`The BasicAsgRollingUpdate stack matches the snapshot 1`] = `
     },
   },
   "Resources": {
-    "AsgReplacingUpdatePolicy78CF34D5": {
+    "AsgRollingUpdatePolicy2A1DDC6F": {
       "Properties": {
         "PolicyDocument": {
           "Statement": [
@@ -90,7 +90,7 @@ exports[`The BasicAsgRollingUpdate stack matches the snapshot 1`] = `
           ],
           "Version": "2012-10-17",
         },
-        "PolicyName": "AsgReplacingUpdatePolicy78CF34D5",
+        "PolicyName": "AsgRollingUpdatePolicy2A1DDC6F",
         "Roles": [
           {
             "Ref": "InstanceRoleBasicC6212E32",
@@ -185,11 +185,11 @@ exports[`The BasicAsgRollingUpdate stack matches the snapshot 1`] = `
           "MaxBatchSize": 6,
           "MinInstancesInService": 3,
           "MinSuccessfulInstancesPercent": 100,
-          "SuspendProcesses": [],
+          "PauseTime": "PT5M",
+          "SuspendProcesses": [
+            "AlarmNotification",
+          ],
           "WaitOnResourceSignals": true,
-        },
-        "AutoScalingScheduledAction": {
-          "IgnoreUnmodifiedGroupSizeProperties": true,
         },
       },
     },
@@ -828,6 +828,7 @@ exports[`The BasicAsgRollingUpdate stack matches the snapshot 1`] = `
           "InstanceType": "t4g.micro",
           "MetadataOptions": {
             "HttpTokens": "required",
+            "InstanceMetadataTags": "enabled",
           },
           "SecurityGroupIds": [
             {
@@ -929,7 +930,8 @@ aws s3 cp 's3://",
 dpkg -i /basic/testing-asg-rolling-update_ABC.deb
 # GuEc2AppExperimental UserData Start
 
-      INSTANCE_ID=$(ec2metadata --instance-id)
+      TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
+      INSTANCE_ID=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" "http://169.254.169.254/latest/meta-data/instance-id")
 
       STATE=$(aws elbv2 describe-target-health         --target-group-arn ",
                   {
