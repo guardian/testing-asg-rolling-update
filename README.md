@@ -1,3 +1,9 @@
+> [!NOTE]
+> Version 59.5.0 of [`@guardian/cdk`](https://github.com/guardian/cdk/releases/tag/v59.5.0)
+> includes a new experimental pattern defining the `AutoScalingRollingUpdate` configuration as recommended from this repository.
+> 
+> The CloudFormation stacks defined in this repository have consequently been deleted, and this repository archived.
+
 # Testing ASG Rolling Update
 
 ## What is this repository for?
